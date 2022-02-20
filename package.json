@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    
     "start-dev": "nodemon --ignore \"./data\" server.js",
     "start": "node server.js",
+    "run serve": "node server.js",
     "baba": "echo BABA",
     "listFiles": "dir",
     "pingGoogle": "ping google.com"
