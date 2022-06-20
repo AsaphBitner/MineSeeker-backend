@@ -1,27 +1,35 @@
-// const http = require('http')
-// const server = http.createServer(function (req, res) {
-//    res.writeHead(200, {'Content-Type': 'text/html'})
-//    res.end(`Hello <b>User</b> - ${Date.now()} \n`)
-// })
-// const port = 3030;
-// server.listen(port, '127.0.0.1')
-// console.log(`Server running at http://127.0.0.1:${port}/`)
-const path = require('path')
+         
+import { instructions } from './instructions-object'
 const express = require('express')
+const dataService = require('./services/data-service')
 const app = express()
-const port = process.env.PORT || 3030;
-const publicPath = path.join(__dirname, '/', 'public')
-app.use(express.static(publicPath))
-
-app.listen(port, () => {
-    console.log(`Server is up on port ${port}!`);
- })
-
- app.get('*', (req, res) => {
-    res.sendFile(path.join(publicPath, 'index.html'));
- })
+const port = process.env.PORT || 3001
+var cors = require('cors')
+app.use(cors())
+app.use(express.static('public'))
+app.use(express.json())
 
 
+
+app.get('/instructions', async (req, res) => {
+   try{
+       let instructions = await dataService.getInstructions()
+       res.send(instructions)
+   }
+catch (err) {
+   console.log('Error! ', err)
+   res.status(401).send('Sorry, error')
+}
+
+})
+
+
+// function addToMongo(inst){
+//    dataService.addObj(inst)
+// }
+
+
+// addToMongo(instructions)
 
 
 
